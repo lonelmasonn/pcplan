@@ -1,4 +1,835 @@
+<!DOCTYPE html>
 <html>
-  <head><title>Test Page</title></head>
-  <body><h1>Hello GitHub Pages!</h1></body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulasi Anggaran PC - Premium</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #E6E6E6;
+            color: #2c3e50;
+            padding: 0px;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff00;
+            border-radius: 16px; 
+            padding: 24px 20px 20px 20px;
+            max-width: 500px;
+            margin: 0px auto auto auto;
+            box-shadow: 0 0px 0px rgba(0, 0, 0, 0.15);
+            border: 0px solid #e2e8f0;
+            position: relative;
+        }
+        
+        h3 { 
+            background-color: #5FBFE7;
+            margin-top: 5px; 
+            padding: 10px;
+            color: #ffffff;
+            font-size: 20px; 
+            letter-spacing: -0.5px; 
+        }
+
+        p.subtitle { 
+            font-size: 12.5px; 
+            color: #7f8c8d; 
+            margin-top: -5px; 
+            margin-bottom: 20px; 
+        }
+        
+        /* PERBAIKAN: Memastikan induk tetap memotong konten tajam di dalamnya saat terbuka */
+        details.kategori-root {
+            margin-bottom: 12px;
+            border-radius: 50px;
+            background-color: #D1DF53;
+            overflow: hidden;
+            border: 0px solid #e2e8f0; 
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02); 
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        @media (hover: hover) {
+            details.kategori-root:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 5px 12px rgba(0, 0, 0, 0.08);
+            }
+        }
+
+        summary.kategori-summary {
+            padding: 14px 16px;
+            cursor: pointer;
+            border-radius: 0px;
+            background-image: url(tbl-menu.png);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        summary::-webkit-details-marker { display: none; }
+        summary { list-style: none; }
+
+        summary, details { -webkit-tap-highlight-color: transparent; }
+        summary:focus, summary:focus-visible { outline: none; }
+        summary:active { background-image: none; }
+
+        .title-wrapper { display: flex; flex-direction: column; gap: 3px; flex: 1; padding-right: 10px; }
+        .kategori-name { font-size: 12px; font-weight: 600; color: #2c3e5080; letter-spacing: 0.2px; }
+        
+        .status-terpilih { 
+            font-size: 14px; 
+            color: #2980b9; 
+            font-weight: 800; 
+            opacity: 0.85; 
+            display: flex; 
+            align-items: center; 
+            gap: 5px; 
+        }
+        .status-dot { color: #2ecc71; font-size: 12px; }
+        .status-dash { color: #7f8c8d; }
+        .menu-icon { font-size: 13px; color: #7f8c8d; transition: transform 0.2s; }
+
+        /* PERBAIKAN: Mengubah sedikit radius luar elemen induk saat terbuka agar proporsional */
+        details[open].kategori-root { 
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); 
+            border-radius: 35px;
+        }
+        details[open].kategori-root > summary.kategori-summary { background-image: url(tbl-menu-op.png); }
+        details[open].kategori-root > summary.kategori-summary { background-size: cover; }
+        details[open].kategori-root > summary.kategori-summary { background-position: center;}
+        details[open].kategori-root > summary.kategori-summary { background-image: #D1DF53; }
+        details[open].kategori-root > summary .kategori-name,
+        details[open].kategori-root > summary .status-terpilih,
+        details[open].kategori-root > summary .status-dot,
+        details[open].kategori-root > summary .status-dash,
+        details[open].kategori-root > summary .menu-icon { color: #000000; }
+        details[open].kategori-root > summary .menu-icon { transform: rotate(90deg); }
+
+        /* PERBAIKAN: Memberi radius bawah pada kontainer abu-abu gelap agar selaras dengan Gambar 3 */
+        .kategori-content { 
+            background-color: #4F4F4F; 
+            border-radius: 0 0 35px 35px;
+            padding-bottom: 12px; 
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: flex-start;
+            padding: 10px 12px 20px 3px; 
+            margin-bottom: 1px;
+            border-radius: 8px;
+            background-color: #C1C1C100; 
+            cursor: pointer;
+            border: 0px solid transparent; 
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .radio-option:hover { 
+            background-color: #2E2E2E;
+            transform: scale(1.01);
+            border-color: #2980b9;
+        }
+
+        .radio-option input[type="radio"] { 
+            margin-top: 3px; 
+            margin-right: 10px; 
+            width: 15px; 
+            height: 15px; 
+            accent-color: #2980b9; 
+        }
+        
+        .prod-column-wrapper { display: flex; flex-direction: column; gap: 4px; flex: 1; width: 100%; }
+        
+        .prod-img {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 6px;
+            cursor: zoom-in;
+            margin-bottom: 8px;
+            background-color: transparent; 
+            border: none;
+        }
+
+        .radio-text { 
+            font-size: 13px; 
+            line-height: 1.5; 
+            color: #ffffff; 
+            width: 100%; 
+            display: block; 
+        }
+        
+        .model-name { 
+            font-weight: 800; 
+            font-size: 14px; 
+            color: #FED400;
+            display: block;
+            margin-bottom: 4px;
+        }   
+        
+        .prod-actions-row {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 10px;
+            width: 100%;
+            flex-wrap: wrap; 
+        }
+
+        .harga-text { 
+            font-weight: 700; 
+            color: #FF7A00; 
+            font-size: 14px; 
+            white-space: nowrap;
+            text-align: right;
+        }
+        
+        .qty-control-box {
+            display: inline-flex;
+            align-items: center;
+            background: #FED40000;
+            border: 0px solid #e2e8f0;
+            border-radius: 6px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .qty-btn {
+            background: #f8fafc00;
+            border: none;
+            color: #ffffff;
+            width: 26px;
+            height: 26px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .qty-btn:hover { background: #2980b900; color: #48FBD4; }
+
+        .qty-val {
+            width: 20px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: bold;
+            color: #ffffff;
+            border: none;
+            background: #434343;
+        }
+
+        .sub-detail-box { 
+            margin-top: 0; 
+            width: 100%;
+        }
+        
+        .sub-summary {
+            display: inline-flex; 
+            align-items: center; 
+            gap: 4px; 
+            color: #C1C1C1;
+            font-size: 11px; 
+            font-weight: normal; 
+            cursor: pointer; 
+            padding: 5px 8px;
+            border-radius: 6px; 
+            background: #1D1D1D30;
+            white-space: nowrap;
+            width: max-content;
+        }
+        
+        .sub-summary .sub-arrow { transition: transform 0.2s; font-size: 10px; color: #FED400; display: inline-block; }
+        details.sub-detail-box[open] > summary .sub-summary .sub-arrow { 
+            transform: rotate(-180deg) !important; 
+        }
+
+        .sub-content { 
+            margin-top: 10px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px;
+            width: 100%;
+            background-color: transparent;
+            padding: 0px;
+            box-sizing: border-box;
+            border-radius: 8px;
+            border: 0px dashed #e2e8f0;
+        }
+        
+        .prod-spec-text { font-size: 12px; color: #ffffff; line-height: 1.6; }
+        .prod-spec-text ul { margin: 4px 0 0 0; padding-left: 14px; }
+        
+        .btn-external-link {
+            display: inline-flex; align-items: center; justify-content: center; background-color: #f8fafc;
+            color: #2c3e50; text-decoration: none; font-size: 10.5px; font-weight: bold;
+            padding: 2px 2px; border-radius: 6px; transition: all 0.2s; align-self: flex-start;
+            border: 1px solid #e2e8f0;
+        }
+        .btn-external-link:hover { background-color: #2980b9; color: #ffffff; }
+
+        .total-box {
+            margin-top: 25px; padding-top: 16px; border-top: 1px dashed #2980b9;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .total-label { font-size: 14px; font-weight: bold; color: #2c3e50; }
+        .total-price { font-size: 22px; font-weight: bold; color: #2980b9; }
+
+        .btn {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; border: none; border-radius: 8px; padding: 12px;
+            font-size: 13.5px; font-weight: bold; cursor: pointer; color: white; transition: all 0.2s;
+        }
+        .btn-lanjut { background-image: url(tbl-lanjut.png); background-size: cover; background-repeat: no-repeat; background-size: cover; background-color: #00ACC2; border-radius: 30px; color: ##000000; margin-top: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .btn-lanjut:hover { transform: translateY(-1px); filter: brightness(1.1); }
+        
+        #panel-aksi-lanjutan { display: none; margin-top: 20px; padding: 16px; border-radius: 12px; background-color: #f8fafc; border: 1px solid #e2e8f0; }
+        .panel-title { font-size: 13px; font-weight: bold; color: #2980b9; margin-bottom: 12px; text-align: center;}
+        .btn-group-share { display: flex; flex-direction: column; gap: 8px; }
+        .btn-wa { background-color: #25D366; color: white; }
+        .btn-image { background-color: #e37400; color: white; }
+        .btn-tutup { background-color: #7f8c8d; color: #ffffff; }
+
+        @media (max-width: 400px) {
+            .prod-actions-row {
+                display: flex !important;
+                justify-content: flex-end !important;
+                gap: 6px !important;
+                flex-wrap: nowrap !important;
+            }
+            .harga-text {
+                grid-column: unset !important;
+                text-align: right !important;
+                margin-top: 0 !important;
+            }
+            .sub-summary {
+                padding: 3px 6px;
+            }
+        }
+        
+        .prod-layout-top {
+            display: flex;
+            align-items: center; 
+            gap: 20px; 
+            margin-bottom: 24px;
+            padding: 0px;
+            background-color: #f8f9fa00;
+            border-radius: 12px;
+            border: 0px solid #e9ecef;
+        }
+        
+        .prod-layout-top .prod-img {
+            width: 120px;       
+            height: 120px;      
+            object-fit: cover;  
+            border-radius: 8px;
+            flex-shrink: 0;     
+        }
+        
+        @media (max-width: 768px) {
+            .prod-layout-top {
+                flex-direction: column; 
+                align-items: flex-start;
+                text-align: left;
+            }
+            
+            .prod-layout-top .prod-img {
+                width: 100%;
+                max-width: 200px;
+                height: auto
+            }
+        }
+
+        #nota-container { position: absolute; left: -9999px; top: 0; width: 360px; padding: 25px; background: #ffffff; color: #333333; }
+        .nota-header { display: flex; align-items: center; gap: 14px; text-align: left; border-bottom: 1px dashed #333; padding-bottom: 15px; margin-bottom: 15px; }
+        .nota-title-block { display: flex; flex-direction: column; gap: 2px; }
+        .nota-logo-wrapper { display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
+        .nota-logo-text { font-size: 28px; color: #2980b9; line-height: 1; }
+        .nota-header h2 { margin: 0; color: #2980b9; font-size: 16px; letter-spacing: 0.2px; font-weight: bold; }
+        .nota-header p { margin: 0; font-size: 11px; color: #666; }
+        .nota-no-invoice { font-size: 10px; color: #999; font-family: monospace; margin-top: 2px; }
+        .nota-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+        .nota-table th { text-align: left; border-bottom: 1px solid #333; padding: 8px 0; font-size: 12px; }
+        .nota-table td { padding: 10px 0; font-size: 12px; border-bottom: 1px dashed #eee; vertical-align: top; color: #333; }
+        .nota-total-row { font-size: 15px; font-weight: bold; color: #2980b9; border-top: 1px dashed #333; }
+        .nota-total-row td { padding-top: 15px; border: none; }
+
+        .img-overlay-modal {
+            display: none; position: fixed; z-index: 10000; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.25s ease; cursor: zoom-out;
+        }
+        .img-overlay-modal.show { display: flex; opacity: 1; }
+        .img-overlay-content { max-width: 90%; max-height: 85vh; object-fit: cover; border-radius: 12px; transform: scale(0.9); transition: transform 0.25s ease; background-color: #1a1c1e; padding: 10px; }
+        .img-overlay-modal.show .img-overlay-content { transform: scale(1); }
+
+        .nota-modal {
+            display: none; position: fixed; z-index: 10005; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); flex-direction: column; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;
+        }
+        .nota-modal-box { background: #202124; padding: 20px; border-radius: 12px; max-width: 400px; width: 100%; text-align: center; color: white; }
+        .nota-modal-box img { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 15px; }
+        .nota-modal-box p { font-size: 12px; background: rgba(255,255,255,0.1); padding: 8px 12px; border-radius: 10px; margin-bottom: 15px; color: #e2e8f0; }
+        .btn-close-nota { background-color: #ef4444; color: white; border: none; padding: 8px 16px; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 12px; }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h3>Simulasi Anggaran</h3>
+    <p class="subtitle">Pilihan komponen:</p>
+    
+    <details class="kategori-root">
+        <summary class="kategori-summary">
+            <div class="title-wrapper">
+                <span class="kategori-name">GPU (Graphics Card)</span>
+                <span class="status-terpilih" id="status-gpu"><span class="status-dash">—</span></span>
+            </div>
+            <span class="menu-icon">&#9776;</span>
+        </summary>
+        <div class="kategori-content">
+            <label class="radio-option">
+                <input type="radio" name="gpu" class="hitung-radio" value="0" data-nama="Kosong" data-harga="0" checked>
+                <span class="radio-text">Tidak memilih / Kosong</span>
+            </label>
+            
+            <label class="radio-option" onclick="handleRadioOptionClick(event)">
+                <input type="radio" name="gpu" class="hitung-radio" value="108000000" data-nama="MSI RTX 5090 32GB">
+                <div class="prod-column-wrapper">
+                    <span class="radio-text">
+                        <span class="model-name">MSI RTX 5090 Lightning Z 32GB</span>
+                        
+                        <details class="sub-detail-box" onclick="event.stopPropagation();">
+                            <summary class="prod-actions-row">
+                                <div class="sub-summary">Info Produk <span class="sub-arrow">◢</span></div>
+                                <span class="harga-text">Rp 108.000.000</span>
+                                <div class="qty-control-box">
+                                    <button type="button" class="qty-btn" onclick="ubahQty(this, -1)">-</button>
+                                    <input type="text" class="qty-val" value="1" readonly>
+                                    <button type="button" class="qty-btn" onclick="ubahQty(this, 1)">+</button>
+                                </div>
+                            </summary>
+
+                            <div class="sub-content">
+                                <div class="prod-layout-top">
+                                    <img src="https://os.md/3V4UEDQ.png" class="prod-img" alt="MSI RTX 5090" onclick="zoomPreviewGambar(this, event)">
+                                    <div class="prod-spec-text">
+                                        <b>Core Specs: FLAGSHIP BADASS</b>
+                                        <ul>
+                                            <li>32GB GDDR7 VRAM</li>
+                                            <li>32GB GDDR7 VRAM: Render video backing track 4K/8K lancar tanpa lag.</li>
+                                            <li>0dB Zero Frozr Tech: Kipas mati total saat tracking gitar dan editing DAW. Bebas noise dan hiss.</li>
+                                            <li>Hybrid Liquid Cooling: Pendingin air terintegrasi menjaga suhu tetap rendah dan senyap.</li>
+                                            <li>GTA V: Resolusi 4K rata kanan tembus ratusan FPS dengan mod grafis.</li>
+                                            <li>Flight Simulator: Visual mentok kanan anti-patah-patah memanfaatkan DLSS 4 Frame Generation.</li>
+                                            <li>Dual BIOS Switch: Saklar fisik untuk mengunci mode senyap maksimal.</li>
+                                        </ul>
+                                    </div>
+                                    <br>
+                                    <div class="prod-spec-text">
+                                        <b>SKOR KEMAMPUAN & DAYA</b>
+                                        <ul>
+                                            <li>DAW: ⭐⭐⭐⭐⭐ (5/5 - Senyap mutlak)</li>
+                                            <li>Gaming: ⭐⭐⭐⭐⭐ (5/5 - Rata kanan semua game)</li>
+                                            <li>Kebutuhan Daya (PSU): Minimal 1600W (Konsumsi daya kartu grafis mencapai 800W–1000W).</li>
+                                        </ul>
+                                        <div class="prod-spec-text">
+                                            <br>
+                                            * Saran PSU: Minimal 1000W
+                                            <br>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="https://id.msi.com" target="_blank" class="btn-external-link">Detail ↗</a>
+                            </div>
+                        </details>
+                    </span>
+                </div>
+            </label>
+            
+            <label class="radio-option" onclick="handleRadioOptionClick(event)">
+                <input type="radio" name="gpu" class="hitung-radio" value="25100000" data-nama="ZOTAC RTX 5080 16GB">
+                <div class="prod-column-wrapper">
+                    <span class="radio-text">
+                        <span class="model-name">ZOTAC SOLID OC 16GB GDDR7</span>
+                        
+                        <details class="sub-detail-box" onclick="event.stopPropagation();">
+                            <summary class="prod-actions-row">
+                                <div class="sub-summary">Info Produk <span class="sub-arrow">◢</span></div>
+                                <span class="harga-text">Rp 25.100.000</span>
+                                <div class="qty-control-box">
+                                    <button type="button" class="qty-btn" onclick="ubahQty(this, -1)">-</button>
+                                    <input type="text" class="qty-val" value="1" readonly>
+                                    <button type="button" class="qty-btn" onclick="ubahQty(this, 1)">+</button>
+                                </div>
+                            </summary>
+
+                            <div class="sub-content">
+                                <div class="prod-layout-top">
+                                    <img src="https://os.md/39JRCS.png" class="prod-img" alt="Zotac RTX 5080" onclick="zoomPreviewGambar(this, event)">
+                                    <div class="prod-spec-text">
+                                        <b>Core Specs:</b>
+                                        <ul>
+                                            <li>16GB GDDR7 Memory</li>
+                                            <li>Saran PSU: 850W+</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <a href="https://www.zotac.com" target="_blank" class="btn-external-link">Detail ↗</a>
+                            </div>
+                        </details>
+                    </span>
+                </div>
+            </label>
+            
+            <label class="radio-option" onclick="handleRadioOptionClick(event)">
+                <input type="radio" name="gpu" class="hitung-radio" value="108000000" data-nama="MSI RTX 5090 32GB">
+                <div class="prod-column-wrapper">
+                    <span class="radio-text">
+                        <span class="model-name">ASUS TUF Gaming GeForce RTX 5070 Ti 16GB GDDR7 OC Edition</span>
+                        
+                        <details class="sub-detail-box" onclick="event.stopPropagation();">
+                            <summary class="prod-actions-row">
+                                <div class="sub-summary">Info Produk <span class="sub-arrow">◢</span></div>
+                                <span class="harga-text">Rp 108.000.000</span>
+                                <div class="qty-control-box">
+                                    <button type="button" class="qty-btn" onclick="ubahQty(this, -1)">-</button>
+                                    <input type="text" class="qty-val" value="1" readonly>
+                                    <button type="button" class="qty-btn" onclick="ubahQty(this, 1)">+</button>
+                                </div>
+                            </summary>
+
+                            <div class="sub-content">
+                                <div class="prod-layout-top">
+                                    <img src="https://dlcdnwebimgs.asus.com/gain/6f6325e9-cd64-4692-bf76-83cd04a85674" class="prod-img" alt="MSI RTX 5090" onclick="zoomPreviewGambar(this, event)">
+                                    <div class="prod-spec-text">
+                                        <b>Core Specs: EFFICIENT WORKHORSE</b>
+                                        <ul>
+                                            <li>16GB GDDR7 VRAM</li>
+                                            <li>Saran PSU: Minimal 1000W</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <a href="https://id.msi.com" target="_blank" class="btn-external-link">Detail ↗</a>
+                            </div>
+                        </details>
+                    </span>
+                </div>
+            </label>
+            
+        </div>
+    </details>
+    
+    <details class="kategori-root">
+        <summary class="kategori-summary">
+            <div class="title-wrapper">
+                <span class="kategori-name">MOTHERBOARD (LGA 1700)</span>
+                <span class="status-terpilih" id="status-motherboard"><span class="status-dash">—</span></span>
+            </div>
+            <span class="menu-icon">&#9776;</span>
+        </summary>
+        <div class="kategori-content">
+            <label class="radio-option">
+                <input type="radio" name="motherboard" class="hitung-radio" value="0" data-nama="Kosong" data-harga="0" checked>
+                <span class="radio-text">Tidak memilih / Kosong</span>
+            </label>
+            <label class="radio-option" onclick="handleRadioOptionClick(event)">
+                <input type="radio" name="motherboard" class="hitung-radio" value="5300000" data-nama="MSI MAG Z790 TOMAHAWK">
+                <div class="prod-column-wrapper">
+                    <span class="radio-text">
+                        <span class="model-name">MSI MAG Z790 TOMAHAWK WIFI</span>
+                        
+                        <details class="sub-detail-box" onclick="event.stopPropagation();">
+                            <summary class="prod-actions-row">
+                                <div class="sub-summary">Info Produk <span class="sub-arrow">◢</span></div>
+                                <span class="harga-text">Rp 5.300.000</span>
+                                <div class="qty-control-box">
+                                    <button type="button" class="qty-btn" onclick="ubahQty(this, -1)">-</button>
+                                    <input type="text" class="qty-val" value="1" readonly>
+                                    <button type="button" class="qty-btn" onclick="ubahQty(this, 1)">+</button>
+                                </div>
+                            </summary>
+
+                            <div class="sub-content">
+                                <div class="prod-layout-top">
+                                    <img src="https://os.md/WEC3GF.png" class="prod-img" alt="MSI Z790" onclick="zoomPreviewGambar(this, event)">
+                                    <div class="prod-spec-text">
+                                        <b>Core Specs:</b>
+                                        <ul>
+                                            <li>DDR5 Support up to 7800+ MHz</li>
+                                            <li>Wi-Fi 7 Solution</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <a href="https://id.msi.com" target="_blank" class="btn-external-link">Detail ↗</a>
+                            </div>
+                        </details>
+                    </span>
+                </div>
+            </label>
+        </div>
+    </details>
+
+    <div class="total-box">
+        <span class="total-label">Total Harga Terpilih:</span>
+        <span class="total-price" id="totalHarga">Rp 0</span>
+    </div>
+
+    <button id="btn-lanjutkan-utama" class="btn btn-lanjut" onclick="bukaPanelAksi()">Lihat Detail Estimasi</button>
+
+    <div id="panel-aksi-lanjutan">
+        <div class="panel-title">✓ Berhasil Disimpan! Pilih Opsi:</div>
+        <div class="btn-group-share">
+            <button class="btn btn-wa" onclick="bagikanKeWhatsApp()">Kirim Ringkasan ke WhatsApp</button>
+            <button class="btn btn-image" onclick="buatGambarNota()">🖼️ Buka & Simpan File Gambar</button>
+            <button class="btn btn-tutup" onclick="tutupPanelAksi()">✕ Ubah Pilihan Lagi</button>
+        </div>
+    </div>
+</div>
+
+<div id="nota-container">
+    <div class="nota-header">
+        <div class="nota-logo-wrapper">
+            <span class="nota-logo-text">💻</span> 
+        </div>
+        <div class="nota-title-block">
+            <h2>RINGKASAN ESTIMASI PC</h2>
+            <p>Dibuat melalui Simulasi Digital Build</p>
+            <div class="nota-no-invoice" id="nota-no-invoice">No. Nota: INV/------/----</div>
+        </div>
+    </div>
+    
+    <table class="nota-table">
+        <thead>
+            <tr>
+                <th style="width: 65%;">Kategori / Item</th>
+                <th style="width: 35%; text-align: right;">Harga</th>
+            </tr>
+        </thead>
+        <tbody id="nota-items-body"></tbody>
+        <tfoot>
+            <tr class="nota-total-row">
+                <td>TOTAL ESTIMASI</td>
+                <td id="nota-total-harga" style="text-align: right;">Rp 0</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div id="notaModalContainer" class="nota-modal">
+    <div class="nota-modal-box">
+        <img id="notaModalImage" src="" alt="Nota Final">
+        <p><b>📱 PENGGUNA HP:</b> Tekan lama pada gambar di atas, lalu pilih <b>"Simpan Gambar" / "Download Gambar"</b></p>
+        <button class="btn-close-nota" onclick="tutupModalNota()">✕ Tutup Nota</button>
+    </div>
+</div>
+
+<div id="imgPreviewModal" class="img-overlay-modal" onclick="closeZoomPreviewGambar()">
+    <img class="img-overlay-content" id="imgModalTarget">
+</div>
+
+<script>
+    const radioButtons = document.querySelectorAll('.hitung-radio');
+    const totalDisplay = document.getElementById('totalHarga');
+    const panelAksi = document.getElementById('panel-aksi-lanjutan');
+    const btnLanjutkan = document.getElementById('btn-lanjutkan-utama');
+
+    function zoomPreviewGambar(imgElement, event) {
+        event.stopPropagation();
+        const modal = document.getElementById('imgPreviewModal');
+        const modalImg = document.getElementById('imgModalTarget');
+        modal.style.display = "flex";
+        setTimeout(() => { modal.classList.add('show'); }, 10);
+        modalImg.src = imgElement.src;
+    }
+
+    function closeZoomPreviewGambar() {
+        const modal = document.getElementById('imgPreviewModal');
+        modal.classList.remove('show');
+        setTimeout(() => { modal.style.display = "none"; }, 250);
+    }
+
+    function handleRadioOptionClick(e) {
+        const radio = e.currentTarget.querySelector('.hitung-radio');
+        if (radio && !radio.checked) {
+            radio.checked = true;
+            const qtyInput = e.currentTarget.querySelector('.qty-val');
+            if (qtyInput && parseInt(qtyInput.value) === 0) {
+                qtyInput.value = 1;
+            }
+            prosesPerubahan();
+            autoCloseMenu(radio);
+        }
+    }
+
+    radioButtons.forEach(radio => {
+        radio.addEventListener('change', () => {
+            prosesPerubahan();
+            autoCloseMenu(radio);
+        });
+    });
+
+    function prosesPerubahan() {
+        hitungTotalRadio();
+        updateTeksJudul();
+        tutupPanelAksi();
+    }
+
+    function ubahQty(button, delta) {
+        const qtyInput = button.parentNode.querySelector('.qty-val');
+        const currentOption = button.closest('.radio-option');
+        const radio = currentOption.querySelector('.hitung-radio');
+        
+        let qty = parseInt(qtyInput.value) + delta;
+        if (qty < 1) qty = 1; 
+        
+        qtyInput.value = qty;
+
+        if (!radio.checked) {
+            radio.checked = true;
+        }
+
+        prosesPerubahan();
+    }
+
+    function hitungTotalRadio() {
+        let total = 0;
+        radioButtons.forEach(radio => {
+            if (radio.checked) {
+                if (radio.value !== "0") {
+                    const qtyInput = radio.closest('.radio-option').querySelector('.qty-val');
+                    const qty = qtyInput ? parseInt(qtyInput.value) : 1;
+                    total += parseInt(radio.value) * qty;
+                }
+            }
+        });
+        totalDisplay.innerText = 'Rp ' + total.toLocaleString('id-ID');
+    }
+
+    function updateTeksJudul() {
+        const kategoriGrup = {};
+        radioButtons.forEach(radio => {
+            if (radio.checked) {
+                kategoriGrup[radio.name] = radio;
+            }
+        });
+
+        for (const [namaKategori, radio] of Object.entries(kategoriGrup)) {
+            const statusTarget = document.getElementById('status-' + namaKategori);
+            if (!statusTarget) continue;
+
+            if (radio.value === "0") {
+                statusTarget.innerHTML = '<span class="status-dash">—</span>';
+            } else {
+                const namaItem = radio.getAttribute('data-nama');
+                const qtyInput = radio.closest('.radio-option').querySelector('.qty-val');
+                const qty = qtyInput ? qtyInput.value : 1;
+                
+                statusTarget.innerHTML = `<span class="status-dot">●</span> <span>${namaItem} (x${qty})</span>`;
+            }
+        }
+    }
+
+    function autoCloseMenu(selectedRadio) {
+        const parentDetails = selectedRadio.closest('details.kategori-root');
+        if (parentDetails) {
+            setTimeout(() => { parentDetails.removeAttribute('open'); }, 300); 
+        }
+    }
+
+    function bukaPanelAksi() {
+        let adaPilihan = false;
+        radioButtons.forEach(radio => {
+            if (radio.checked && radio.value !== "0") adaPilihan = true;
+        });
+
+        if (!adaPilihan) {
+            alert("Silakan tentukan minimal satu pilihan sebelum melanjutkan!");
+            return;
+        }
+
+        panelAksi.style.display = 'block';
+        btnLanjutkan.style.display = 'none';
+        panelAksi.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function tutupPanelAksi() {
+        panelAksi.style.display = 'none';
+        btnLanjutkan.style.display = 'flex';
+    }
+
+    function generateNomorNota() {
+        const skrg = new Date();
+        return `INV/${skrg.getFullYear()}${String(skrg.getMonth() + 1).padStart(2, '0')}${String(skrg.getDate()).padStart(2, '0')}/${String(skrg.getHours()).padStart(2, '0')}${String(skrg.getMinutes()).padStart(2, '0')}`;
+    }
+
+    function bagikanKeWhatsApp() {
+        const nomorNotaBaru = generateNomorNota();
+        let teksNota = `--- *SIMULASI ANGGARAN PC* ---\nNo. Nota: ${nomorNotaBaru}\n\n`;
+        
+        radioButtons.forEach(radio => {
+            if (radio.checked && radio.value !== "0") {
+                const namaItem = radio.getAttribute('data-nama');
+                const qtyInput = radio.closest('.radio-option').querySelector('.qty-val');
+                const qty = qtyInput ? qtyInput.value : 1;
+                const namaKategori = radio.closest('details.kategori-root').querySelector('.kategori-name').innerText;
+                teksNota += `*${namaKategori}*:\n> ${namaItem} (x${qty})\n\n`;
+            }
+        });
+        teksNota += `*TOTAL ESTIMASI:* ${totalDisplay.innerText}`;
+        window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent(teksNota), '_blank');
+    }
+
+    function buatGambarNota() {
+        const bodyNota = document.getElementById('nota-items-body');
+        const totalNota = document.getElementById('nota-total-harga');
+        const notaWrapper = document.getElementById('nota-container');
+        const invoiceDisplay = document.getElementById('nota-no-invoice');
+        
+        bodyNota.innerHTML = ''; 
+        const nomorNotaBaru = generateNomorNota();
+        invoiceDisplay.innerText = `No. Nota: ${nomorNotaBaru}`;
+
+        radioButtons.forEach(radio => {
+            if (radio.checked && radio.value !== "0") {
+                const namaKategori = radio.closest('details.kategori-root').querySelector('.kategori-name').innerText;
+                const namaItem = radio.getAttribute('data-nama');
+                const qtyInput = radio.closest('.radio-option').querySelector('.qty-val');
+                const qty = qtyInput ? parseInt(qtyInput.value) : 1;
+                
+                const kalkulasiSubtotal = parseInt(radio.value) * qty;
+                const hargaFormat = "Rp " + kalkulasiSubtotal.toLocaleString('id-ID');
+
+                const row = `<tr>
+                    <td><b>${namaKategori}</b><br><span style="color:#555; font-size:11px;">${namaItem} (x${qty})</span></td>
+                    <td style="text-align: right; font-weight: bold; white-space: nowrap;">${hargaFormat}</td>
+                </tr>`;
+                bodyNota.innerHTML += row;
+            }
+        });
+
+        totalNota.innerText = totalDisplay.innerText;
+
+        html2canvas(notaWrapper, { scale: 2, useCORS: true, allowTaint: true }).then(canvas => {
+            const dataUrlGambar = canvas.toDataURL('image/png');
+            document.getElementById('notaModalImage').src = dataUrlGambar;
+            document.getElementById('notaModalContainer').style.display = 'flex';
+        });
+    }
+
+    function tutupModalNota() {
+        document.getElementById('notaModalContainer').style.display = 'none';
+    }
+</script>
+
+</body>
 </html>
