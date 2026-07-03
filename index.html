@@ -63,7 +63,7 @@
             padding: 14px 16px;
             cursor: pointer;
             border-radius: 0px;
-            background-image: url(img/tbl-menu.png);
+            background-image: url(tbl-menu.png);
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -100,7 +100,7 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); 
             border-radius: 35px;
         }
-        details[open].kategori-root > summary.kategori-summary { background-image: url(img/tbl-menu-op.png); }
+        details[open].kategori-root > summary.kategori-summary { background-image: url(tbl-menu-op.png); }
         details[open].kategori-root > summary.kategori-summary { background-size: cover; }
         details[open].kategori-root > summary.kategori-summary { background-position: center;}
         details[open].kategori-root > summary.kategori-summary { background-image: #D1DF53; }
@@ -288,7 +288,7 @@
             width: 100%; border: none; border-radius: 8px; padding: 12px;
             font-size: 13.5px; font-weight: bold; cursor: pointer; color: white; transition: all 0.2s;
         }
-        .btn-lanjut { background-image: url('img/tbl-lanjut.png'); background-size: cover; background-repeat: no-repeat; background-size: cover; background-color: #00ACC2; border-radius: 30px; color: ##000000; margin-top: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .btn-lanjut { background-image: url(tbl-lanjut.png); background-size: cover; background-repeat: no-repeat; background-size: cover; background-color: #00ACC2; border-radius: 30px; color: ##000000; margin-top: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .btn-lanjut:hover { transform: translateY(-1px); filter: brightness(1.1); }
         
         #panel-aksi-lanjutan { display: none; margin-top: 20px; padding: 16px; border-radius: 12px; background-color: #f8fafc; border: 1px solid #e2e8f0; }
@@ -403,15 +403,15 @@
             </label>
             
             <label class="radio-option" onclick="handleRadioOptionClick(event)">
-                <input type="radio" name="gpu" class="hitung-radio" value="108000000" data-nama="MSI RTX 5090 32GB">
+                <input type="radio" name="gpu" class="hitung-radio" value="21800000" data-nama="ASUS TUF GAMING NV/GF.RTX 5070 Ti 16GB">
                 <div class="prod-column-wrapper">
                     <span class="radio-text">
-                        <span class="model-name">MSI RTX 5090 Lightning Z 32GB</span>
+                        <span class="model-name">ASUS TUF Gaming GeForce RTX 5070 Ti 16GB GDDR7 OC Edition</span>
                         
                         <details class="sub-detail-box" onclick="event.stopPropagation();">
                             <summary class="prod-actions-row">
                                 <div class="sub-summary">Info Produk <span class="sub-arrow">◢</span></div>
-                                <span class="harga-text">Rp 108.000.000</span>
+                                <span class="harga-text">Rp 21.800.000</span>
                                 <div class="qty-control-box">
                                     <button type="button" class="qty-btn" onclick="ubahQty(this, -1)">-</button>
                                     <input type="text" class="qty-val" value="1" readonly>
@@ -421,30 +421,27 @@
 
                             <div class="sub-content">
                                 <div class="prod-layout-top">
-                                    <img src="https://os.md/3V4UEDQ.png" class="prod-img" alt="MSI RTX 5090" onclick="zoomPreviewGambar(this, event)">
+                                    <img src="https://dlcdnwebimgs.asus.com/gain/6f6325e9-cd64-4692-bf76-83cd04a85674" class="prod-img" alt="MSI RTX 5090" onclick="zoomPreviewGambar(this, event)">
                                     <div class="prod-spec-text">
-                                        <b>Core Specs: FLAGSHIP BADASS</b>
+                                        <b>Core Specs: EFFICIENT WORKHORSE</b>
                                         <ul>
-                                            <li>32GB GDDR7 VRAM</li>
-                                            <li>32GB GDDR7 VRAM: Render video backing track 4K/8K lancar tanpa lag.</li>
-                                            <li>0dB Zero Frozr Tech: Kipas mati total saat tracking gitar dan editing DAW. Bebas noise dan hiss.</li>
-                                            <li>Hybrid Liquid Cooling: Pendingin air terintegrasi menjaga suhu tetap rendah dan senyap.</li>
-                                            <li>GTA V: Resolusi 4K rata kanan tembus ratusan FPS dengan mod grafis.</li>
-                                            <li>Flight Simulator: Visual mentok kanan anti-patah-patah memanfaatkan DLSS 4 Frame Generation.</li>
-                                            <li>Dual BIOS Switch: Saklar fisik untuk mengunci mode senyap maksimal.</li>
+                                            <li>16GB GDDR7 VRAM: Render video backing track 4K aman dan lancar.</li>
+                                            <li>0dB Technology: Kipas mati suri saat tracking gitar dan editing DAW. Bebas noise dan hiss.</li>
+                                            <li>TUF Military-Grade Build: Komponen standar militer berdaya tahan tinggi dengan kipas axial yang tenang.</li>
+                                            <li>GTA V: Libas resolusi 4K rata kanan dengan mod grafis tanpa kendala.</li>
+                                            <li>Flight Simulator: Visual tinggi lancar memanfaatkan fitur DLSS Frame Generation.</li>
                                         </ul>
                                     </div>
-                                    <br>
                                     <div class="prod-spec-text">
                                         <b>SKOR KEMAMPUAN & DAYA</b>
                                         <ul>
-                                            <li>DAW: ⭐⭐⭐⭐⭐ (5/5 - Senyap mutlak)</li>
-                                            <li>Gaming: ⭐⭐⭐⭐⭐ (5/5 - Rata kanan semua game)</li>
-                                            <li>Kebutuhan Daya (PSU): Minimal 1600W (Konsumsi daya kartu grafis mencapai 800W–1000W).</li>
+                                            <li>DAW: ⭐⭐⭐⭐☆ (4/5 - Senyap saat beban kerja rendah)
+                                            <li>Gaming: ⭐⭐⭐⭐☆ (4/5 - Sangat bertenaga untuk game modern)
+                                            <li>Kebutuhan Daya (PSU): Minimal 750W.</li>
                                         </ul>
                                         <div class="prod-spec-text">
                                             <br>
-                                            * Saran PSU: Minimal 1000W
+                                            * Saran PSU: Minimal 750W
                                             <br>
                                         </div>
                                     </div>
@@ -457,7 +454,7 @@
             </label>
             
             <label class="radio-option" onclick="handleRadioOptionClick(event)">
-                <input type="radio" name="gpu" class="hitung-radio" value="25100000" data-nama="ZOTAC RTX 5080 16GB">
+                <input type="radio" name="gpu" class="hitung-radio" value="25100000" data-nama="ZOTAC NV/GF.RTX 5080 16GB">
                 <div class="prod-column-wrapper">
                     <span class="radio-text">
                         <span class="model-name">ZOTAC SOLID OC 16GB GDDR7</span>
@@ -477,11 +474,29 @@
                                 <div class="prod-layout-top">
                                     <img src="https://os.md/39JRCS.png" class="prod-img" alt="Zotac RTX 5080" onclick="zoomPreviewGambar(this, event)">
                                     <div class="prod-spec-text">
-                                        <b>Core Specs:</b>
+                                        <b>Core Specs: MID-TIER MONSTER</b>
                                         <ul>
-                                            <li>16GB GDDR7 Memory</li>
+                                            <li><b>16GB GDDR7 Memory</b>, Render video backing track 4K aman dan lancar.</li>
+                                            <li>0dB Freeze Tech: Kipas berhenti berputar saat tracking gitar dan editing DAW. Bebas noise dan hiss.</li>
+                                            <li>Solid OC Cooling: Heatsink tebal dengan kipas optimal untuk performa harian yang tenang.</li>
+                                            <li>GTA V: Libas resolusi 4K rata kanan dengan mod grafis tanpa kendala.</li>
+                                            <li>Flight Simulator: Visual tinggi lancar memanfaatkan fitur DLSS Frame Generation.</li>
+
                                             <li>Saran PSU: 850W+</li>
                                         </ul>
+                                    </div>
+                                    <div class="prod-spec-text">
+                                        <b>SKOR KEMAMPUAN & DAYA</b>
+                                        <ul>
+                                            <li>DAW: ⭐⭐⭐⭐☆ (4/5 - Senyap saat beban kerja rendah)
+                                            <li>Gaming: ⭐⭐⭐⭐☆ (4/5 - Sangat bertenaga untuk game modern)
+                                            <li>Kebutuhan Daya (PSU): Minimal 850W.</li>
+                                        </ul>
+                                        <div class="prod-spec-text">
+                                            <br>
+                                            * Saran PSU: Minimal 850W
+                                            <br>
+                                        </div>
                                     </div>
                                 </div>
                                 <a href="https://www.zotac.com" target="_blank" class="btn-external-link">Detail ↗</a>
@@ -492,10 +507,10 @@
             </label>
             
             <label class="radio-option" onclick="handleRadioOptionClick(event)">
-                <input type="radio" name="gpu" class="hitung-radio" value="108000000" data-nama="MSI RTX 5090 32GB">
+                <input type="radio" name="gpu" class="hitung-radio" value="108000000" data-nama="MSI NV/GF.RTX 5090 32GB">
                 <div class="prod-column-wrapper">
                     <span class="radio-text">
-                        <span class="model-name">ASUS TUF Gaming GeForce RTX 5070 Ti 16GB GDDR7 OC Edition</span>
+                        <span class="model-name">MSI RTX 5090 Lightning Z 32GB</span>
                         
                         <details class="sub-detail-box" onclick="event.stopPropagation();">
                             <summary class="prod-actions-row">
@@ -510,13 +525,30 @@
 
                             <div class="sub-content">
                                 <div class="prod-layout-top">
-                                    <img src="https://dlcdnwebimgs.asus.com/gain/6f6325e9-cd64-4692-bf76-83cd04a85674" class="prod-img" alt="MSI RTX 5090" onclick="zoomPreviewGambar(this, event)">
+                                    <img src="https://os.md/3V4UEDQ.png" class="prod-img" alt="MSI NV/GF.RTX 5090" onclick="zoomPreviewGambar(this, event)">
                                     <div class="prod-spec-text">
-                                        <b>Core Specs: EFFICIENT WORKHORSE</b>
+                                        <b>Core Specs: FLAGSHIP BADASS</b>
                                         <ul>
-                                            <li>16GB GDDR7 VRAM</li>
-                                            <li>Saran PSU: Minimal 1000W</li>
+                                            <li><b>32GB GDDR7 VRAM</b>, Render video backing track 4K/8K lancar tanpa lag.</li>
+                                            <li><b>0dB Zero Frozr Tech</b>, Kipas mati total saat tracking gitar dan editing DAW. Bebas noise dan hiss.</li>
+                                            <li><b>Hybrid Liquid Cooling</b>: Pendingin air terintegrasi menjaga suhu tetap rendah dan senyap.</li>
+                                            <li>GTA V: Resolusi 4K rata kanan tembus ratusan FPS dengan mod grafis.</li>
+                                            <li>Flight Simulator: Visual mentok kanan anti-patah-patah memanfaatkan DLSS 4 Frame Generation.</li>
+                                            <li>Dual BIOS Switch: Saklar fisik untuk mengunci mode senyap maksimal.</li>
                                         </ul>
+                                    </div>
+                                    <div class="prod-spec-text">
+                                        <b>SKOR KEMAMPUAN & DAYA</b>
+                                        <ul>
+                                            <li>DAW: ⭐⭐⭐⭐⭐ (5/5 - Senyap mutlak)</li>
+                                            <li>Gaming: ⭐⭐⭐⭐⭐ (5/5 - Rata kanan semua game)</li>
+                                            <li>Kebutuhan Daya (PSU): Minimal 1600W (Konsumsi daya kartu grafis mencapai 800W–1000W).</li>
+                                        </ul>
+                                        <div class="prod-spec-text">
+                                            <br>
+                                            * Saran PSU: Minimal 1000W
+                                            <br>
+                                        </div>
                                     </div>
                                 </div>
                                 <a href="https://id.msi.com" target="_blank" class="btn-external-link">Detail ↗</a>
